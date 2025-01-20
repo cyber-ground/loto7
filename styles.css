@@ -1,0 +1,395 @@
+@font-face {
+  font-family: "Rodin-Pro";
+  src: local("Rodin Pro"), local("Rodin-Pro"), url("font/Rodin-Pro.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Alien-Encounters-Regular";
+  src: local("Alien Encounters Regular"), local("Alien-Encounters-Regular"), url("font/Alien-Encounters-Regular.ttf") format("truetype");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Audiowide";
+  src: local("Audiowide"), url("font/Audiowide.ttf") format("truetype");
+  font-display: swap;
+}
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: #212121;
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  background-image: url("img/aurora.jpg");
+  background-position: center;
+  background-size: cover;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.container .visual-container {
+  width: 100%;
+}
+.container .visual-container.portrait.largeViewport {
+  padding-bottom: 25px;
+}
+.container .visual-container.landscape.viewportSmall {
+  padding-bottom: 25px;
+}
+.container .visual-container.landscape.viewportLarge {
+  padding-bottom: 40px;
+}
+.container .visual-container .spacer {
+  height: 1.5vh;
+}
+.container .visual-container .spacer.viewportSmall {
+  height: 28px;
+}
+.container .visual-container .spacer.viewportLarge {
+  height: 46px;
+}
+.container .visual-container .circle-container {
+  width: 100%;
+  margin: 0 auto;
+  font-family: "rodin-Pro";
+  display: flex;
+  justify-content: center;
+}
+.container .visual-container .circle-container.viewportLarge .circle, .container .visual-container .circle-container.viewportLarge .dummy {
+  aspect-ratio: 2/1.25;
+}
+.container .visual-container .circle-container .circle {
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.1), inset -1px -1px 1px rgba(255, 255, 255, 0.05);
+}
+.container .visual-container .circle-container .circle, .container .visual-container .circle-container .dummy {
+  position: relative;
+  width: 17vw;
+  aspect-ratio: 2/1;
+  max-width: 70px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.8);
+  padding-bottom: 3px;
+  z-index: 1;
+  margin: 3px;
+}
+.container .visual-container .circle-container .circle.landscape, .container .visual-container .circle-container .dummy.landscape {
+  width: initial;
+  max-width: initial;
+  height: initial;
+  font-size: initial;
+  width: 25vw;
+  max-width: 70px;
+  aspect-ratio: 1;
+  border-radius: 50px;
+  margin: initial;
+}
+.container .visual-container .circle-container .circle.activeCircle.landscape, .container .visual-container .circle-container .dummy.activeCircle.landscape {
+  font-size: 34px;
+}
+.container .visual-container .circle-container .circle.activeCircle, .container .visual-container .circle-container .dummy.activeCircle {
+  font-size: 24px;
+  color: #121212;
+  -webkit-text-stroke: 3px #fff;
+  paint-order: stroke;
+}
+.container .visual-container .circle-container .circle.activeCircle.selected, .container .visual-container .circle-container .dummy.activeCircle.selected {
+  z-index: 100;
+}
+.container .visual-container .circle-container .circle.activeCircle.selected::before, .container .visual-container .circle-container .dummy.activeCircle.selected::before {
+  content: "";
+  z-index: 1;
+  position: absolute;
+  width: 16vw;
+  height: 5vh;
+  box-shadow: 0 0 0 0.8vw #0f0;
+  border-radius: 3px;
+  margin-top: 3px;
+}
+.container .visual-container .circle-container .circle.activeCircle.largeViewport.selected::before, .container .visual-container .circle-container .dummy.activeCircle.largeViewport.selected::before {
+  height: 6vh;
+}
+.container .visual-container .circle-container .circle.activeCircle.landscape.selected::before, .container .visual-container .circle-container .dummy.activeCircle.landscape.selected::before {
+  width: initial;
+  max-width: initial;
+  height: initial;
+  content: "";
+  z-index: 1;
+  position: absolute;
+  box-shadow: 0 0 0 0.8vw #0f0;
+  border-radius: 3px;
+  width: 75px;
+  aspect-ratio: 1;
+}
+.container .visual-container .circle-container .circle.ones, .container .visual-container .circle-container .dummy.ones {
+  background-color: rgba(255, 111, 0, 0.6);
+}
+.container .visual-container .circle-container .circle.tens, .container .visual-container .circle-container .dummy.tens {
+  background-color: rgba(0, 178, 255, 0.6);
+}
+.container .visual-container .circle-container .circle.twenties, .container .visual-container .circle-container .dummy.twenties {
+  background-color: rgba(255, 208, 0, 0.6);
+}
+.container .visual-container .circle-container .circle.thirties, .container .visual-container .circle-container .dummy.thirties {
+  background-color: rgba(193, 79, 255, 0.6);
+}
+.container .visual-container .circle-container .jackpot-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+.container .visual-container .circle-container .jackpot-wrapper.landscape {
+  flex-direction: row;
+  gap: 1.5vw;
+}
+.container .visual-container .circle-container .ones .circle.activeCircle:not(.landscape) {
+  background-color: rgba(255, 111, 0, 0.6);
+}
+.container .visual-container .circle-container .tens .circle.activeCircle {
+  background-color: rgba(0, 178, 255, 0.6);
+}
+.container .visual-container .circle-container .twenties .circle.activeCircle {
+  background-color: rgba(255, 208, 0, 0.6);
+}
+.container .visual-container .circle-container .thirties .circle.activeCircle {
+  background-color: rgba(193, 79, 255, 0.6);
+}
+.container .control-container {
+  position: relative;
+  width: 95%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.container .control-container.active .btnSet-wpr .icon {
+  position: absolute;
+  right: -10px;
+  top: 60px;
+}
+.container .control-container.active .btnSelect-wpr {
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: initial;
+}
+.container .control-container.active .counter-wpr .counter {
+  margin-top: -40px;
+}
+.container .control-container.viewportLarge .btnSelect-wpr {
+  margin-bottom: 20px;
+}
+.container .control-container .touchPrevent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.container .control-container .wpr {
+  display: flex;
+  margin: 5px 0;
+}
+.container .control-container .wpr .box {
+  font-family: "Alien-Encounters-Regular";
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80px;
+  height: 35px;
+  font-size: 1.2em;
+  margin: 0 3px;
+  color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.2), inset -1px -1px 1px rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(3px);
+  border-radius: 10px;
+}
+.container .control-container .wpr .box.activate {
+  color: rgba(255, 255, 255, 0.7019607843);
+}
+.container .control-container .wpr .counter {
+  font-family: "Rodin-Pro";
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4), inset -1px -1px 1px rgba(255, 255, 255, 0.3);
+}
+.container .control-container .wpr .counter.active {
+  color: #fff;
+  font-size: 30px;
+  border: 6px solid #00ff00;
+  padding-bottom: 3px;
+}
+.container .control-container .wpr .counter.inactive {
+  color: rgba(255, 255, 255, 0.2);
+}
+.container .control-container .wpr .btnManual {
+  height: 50px;
+  background-color: rgba(0, 170, 255, 0.7019607843);
+  font-size: 25px;
+  padding-bottom: 3px;
+  color: #00FF00;
+}
+.container .control-container .wpr .btnManual.inactive {
+  color: rgba(0, 255, 0, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(3px);
+}
+.container .control-container .wpr .btnManual.selected {
+  color: rgba(255, 255, 0, 0.8);
+  border: 6px solid #0f0;
+  box-shadow: initial;
+}
+.container .control-container .wpr .btnManual .star.animate {
+  animation: animate 1s linear infinite;
+}
+.container .control-container .wpr .btnSelect {
+  font-size: 1.9em;
+  width: 150px;
+  height: 45px;
+  margin: 5px 5px 10px;
+  padding: 7px 0 0 1px;
+  letter-spacing: 1px;
+}
+.container .control-container .wpr .btnSelect:nth-of-type(2) {
+  font-size: 2em;
+  padding-left: 5px;
+}
+.container .control-container .wpr .btnReset {
+  width: 100px;
+  font-size: 1.4em;
+  padding: 5px 0 0 1px;
+}
+.container .control-container .wpr .btnReset.activate {
+  background-color: rgba(175, 113, 255, 0.7019607843);
+}
+.container .control-container .wpr .btnQp {
+  background-color: rgba(175, 113, 255, 0.7019607843);
+  color: rgba(255, 255, 255, 0.7019607843);
+  font-size: 1.4em;
+  padding: 6px 0 0 2px;
+  animation: animateQp 2s linear infinite;
+}
+.container .control-container .wpr .btnQp.inactivate {
+  color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.1);
+  animation: initial;
+}
+.container .control-container .wpr .btnChange {
+  position: relative;
+}
+.container .control-container .wpr .btnChange.activate {
+  background-color: rgba(250, 43, 43, 0.4901960784);
+  color: rgba(255, 255, 255, 0.7019607843);
+}
+.container .control-container .wpr .btnChange.swapBgColor {
+  background-color: transparent;
+  border: 5px solid #00ff00;
+  animation: animate 1s linear infinite;
+}
+.container .control-container .wpr .btnChange.arrowAppear.single::before {
+  content: "\f30c";
+  font-size: 25px;
+}
+.container .control-container .wpr .btnChange.arrowAppear::before {
+  content: "\f30b";
+  font-family: "font awesome 6 free";
+  z-index: 1;
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #0f0;
+}
+.container .control-container .wpr .btnSubmit.activate {
+  background-color: rgba(38, 255, 0, 0.5019607843);
+}
+.container .control-container .btnSet-wpr {
+  position: relative;
+  width: 97%;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.container .control-container .btnSet-wpr .icon {
+  display: flex;
+  width: max-content;
+  position: static;
+}
+.container .control-container .btnSet-wpr .icon .btnDownload, .container .control-container .btnSet-wpr .icon .btnUpload {
+  position: relative;
+  font-size: 25px;
+  width: 50px;
+  aspect-ratio: 1;
+  padding-top: 1px;
+  margin: 0 10px;
+  transition: 0s;
+}
+.container .control-container .btnSet-wpr .icon .btnDownload .iconUpload.fa-xmark, .container .control-container .btnSet-wpr .icon .btnUpload .iconUpload.fa-xmark {
+  font-size: 35px;
+  -webkit-text-stroke: 3px;
+  paint-order: stroke;
+  border-radius: 10px;
+}
+
+.btnDelete {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  aspect-ratio: 1;
+  background-color: rgba(51, 51, 51, 0.7019607843);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 0, 0, 0.5019607843);
+  font-size: 60px;
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+}
+.btnDelete.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes animateQp {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+  }
+}
