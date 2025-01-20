@@ -8,8 +8,6 @@ import {console_color,console_red,console_orange,console_yellow,console_green,
 //	['.9','.8','.7','.6','.5','.4','.3','.2','.1']
 ['e6','cc','b3','99','80','66','4d','33','1a']
 
-document.addEventListener('DOMContentLoaded', () => {
-	
 const container = document.querySelector('.container');
 const circleContainer = document.querySelector('.circle-container');
 const targets = document.querySelectorAll('.target');
@@ -811,7 +809,7 @@ function assignCirclesColor() {
 	});
 }
 
-});
+
 // -------------------------------------------------------------------------------
 //* ---------------------------------------
 
