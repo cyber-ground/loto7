@@ -43,18 +43,47 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	let [storeCount, storeIndex, slideIndex] = [0,0,0]; 
 	let [newNumbers, insertedNumbers, currentJackpotNumbers] = [[],[],[]];
 	let [lastSlideIndex, storageValues, storageLength] = [[],[],[]];
-var jackpotHowl = new Howl({src: ['mp3/jackpot.mp3'], volume: 0.2}); 
-var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 0.1}); 
-var resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 0.2}); 
-var slideHowl = new Howl({src: ['mp3/slide.mp3'], volume: 0.1}); 
-var uploadHowl = new Howl({src: ['mp3/upload.mp3'], volume: 0.05}); 
-var downloadHowl = new Howl({src: ['mp3/download.mp3'], volume: 0.02}); 
-var callDeleteHowl = new Howl({src: ['mp3/callDelete.mp3'], volume: 0.3}); 
-var callDeleteAllHowl = new Howl({src: ['mp3/callDeleteAll.mp3'], volume: 0.03}); 
-var deleteHowl = new Howl({src: ['mp3/delete.mp3'], volume: 0.2}); 
-var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 0.1}); 
-var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 0.2}); 
-var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 0.2}); 
+	
+	var jackpotHowl
+	var swapHowl
+	var resetHowl
+	var slideHowl
+	var uploadHowl
+	var downloadHowl
+	var callDeleteHowl
+	var callDeleteAllHowl
+	var deleteHowl
+	var deleteAllHowl 
+	var undoHowl
+	var faultHowl
+
+	document.addEventListener('DOMContentLoaded', () => {
+		jackpotHowl = new Howl({src: ['mp3/jackpot.mp3'], volume: 0.2}); 
+		swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 0.1}); 
+		resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 0.2}); 
+		slideHowl = new Howl({src: ['mp3/slide.mp3'], volume: 0.1}); 
+		uploadHowl = new Howl({src: ['mp3/upload.mp3'], volume: 0.05}); 
+		downloadHowl = new Howl({src: ['mp3/download.mp3'], volume: 0.02}); 
+		callDeleteHowl = new Howl({src: ['mp3/callDelete.mp3'], volume: 0.3}); 
+		callDeleteAllHowl = new Howl({src: ['mp3/callDeleteAll.mp3'], volume: 0.03}); 
+		deleteHowl = new Howl({src: ['mp3/delete.mp3'], volume: 0.2}); 
+		deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 0.1}); 
+		undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 0.2}); 
+		faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 0.2}); 
+	});
+
+	// var jackpotHowl = new Howl({src: ['mp3/jackpot.mp3'], volume: 0.2}); 
+	// var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 0.1}); 
+	// var resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 0.2}); 
+	// var slideHowl = new Howl({src: ['mp3/slide.mp3'], volume: 0.1}); 
+	// var uploadHowl = new Howl({src: ['mp3/upload.mp3'], volume: 0.05}); 
+	// var downloadHowl = new Howl({src: ['mp3/download.mp3'], volume: 0.02}); 
+	// var callDeleteHowl = new Howl({src: ['mp3/callDelete.mp3'], volume: 0.3}); 
+	// var callDeleteAllHowl = new Howl({src: ['mp3/callDeleteAll.mp3'], volume: 0.03}); 
+	// var deleteHowl = new Howl({src: ['mp3/delete.mp3'], volume: 0.2}); 
+	// var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 0.1}); 
+	// var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 0.2}); 
+	// var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 0.2}); 
 
 function init() {
 	if(portrait) { setCircleNumber()}
