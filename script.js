@@ -44,19 +44,7 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	let [newNumbers, insertedNumbers, currentJackpotNumbers] = [[],[],[]];
 	let [lastSlideIndex, storageValues, storageLength] = [[],[],[]];
 	
-	var insertHowl = new Howl({src: ['mp3/insert.mp3'], volume: 0.2}); 
-	var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 0.1}); 
-	var resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 0.2}); 
-	var slideHowl = new Howl({src: ['mp3/slide.mp3'], volume: 0.1}); 
-	var uploadHowl = new Howl({src: ['mp3/upload.mp3'], volume: 0.05}); 
-	var downloadHowl = new Howl({src: ['mp3/download.mp3'], volume: 0.02}); 
-	var callDeleteHowl = new Howl({src: ['mp3/callDelete.mp3'], volume: 0.3}); 
-	var callDeleteAllHowl = new Howl({src: ['mp3/callDeleteAll.mp3'], volume: 0.03}); 
-	var deleteHowl = new Howl({src: ['mp3/delete.mp3'], volume: 0.2}); 
-	var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 0.1}); 
-	var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 0.2}); 
-	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 0.2});
-	
+
 function init() {
 	if(portrait) { setCircleNumber()}
 	animateStars();
@@ -809,7 +797,18 @@ function assignCirclesColor() {
 	});
 }
 
-
+	var insertHowl = new Howl({src: ['mp3/insert.mp3'], volume: 0.2}); 
+	var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 0.1}); 
+	var resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 0.2}); 
+	var slideHowl = new Howl({src: ['mp3/slide.mp3'], volume: 0.1}); 
+	var uploadHowl = new Howl({src: ['mp3/upload.mp3'], volume: 0.05}); 
+	var downloadHowl = new Howl({src: ['mp3/download.mp3'], volume: 0.02}); 
+	var callDeleteHowl = new Howl({src: ['mp3/callDelete.mp3'], volume: 0.3}); 
+	var callDeleteAllHowl = new Howl({src: ['mp3/callDeleteAll.mp3'], volume: 0.03}); 
+	var deleteHowl = new Howl({src: ['mp3/delete.mp3'], volume: 0.2}); 
+	var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 0.1}); 
+	var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 0.2}); 
+	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 0.2});
 
 // -------------------------------------------------------------------------------
 //* ---------------------------------------
