@@ -348,6 +348,7 @@ body {
         &.arrowAppear::before {
           content: '\f30b';
           font-family: "font awesome 6 free";
+          font-weight: bold; //*> absolute
           z-index: 1;
           position: absolute;
           inset: 0;
