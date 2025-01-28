@@ -230,12 +230,6 @@ body {
     &.viewportLarge .btnSelect-wpr {
       margin-bottom: 20px;
     }
-    .touchPrevent {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      // background-color: #ff0;
-    }
     .wpr {
       display: flex;
       margin: 5px 0;
@@ -372,7 +366,7 @@ body {
       .icon {
         display: flex;
         width: max-content;
-        position: static;
+        position: relative;
         .btnDownload, .btnUpload {
           position: relative;
           font-size: 25px;

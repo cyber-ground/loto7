@@ -198,11 +198,6 @@ body {
 .container .control-container.viewportLarge .btnSelect-wpr {
   margin-bottom: 20px;
 }
-.container .control-container .touchPrevent {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
 .container .control-container .wpr {
   display: flex;
   margin: 5px 0;
@@ -331,7 +326,7 @@ body {
 .container .control-container .btnSet-wpr .icon {
   display: flex;
   width: max-content;
-  position: static;
+  position: relative;
 }
 .container .control-container .btnSet-wpr .icon .btnDownload, .container .control-container .btnSet-wpr .icon .btnUpload {
   position: relative;

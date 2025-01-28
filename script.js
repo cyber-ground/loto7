@@ -15,7 +15,6 @@ const jackpotWrapper = circleContainer.querySelector('.jackpot-wrapper');
 const jackpotCircles = jackpotWrapper.querySelectorAll('.circle');
 const visualContainer = container.querySelector('.visual-container');
 const controlContainer = document.querySelector('.control-container');
-const touchPrevent = controlContainer.querySelector('.touchPrevent'); //*
 	const spacer = document.querySelector('.spacer');
 	const ones = circleContainer.querySelector('.ones');
 	const tens = circleContainer.querySelector('.tens');
@@ -56,22 +55,20 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 1}); 
 	var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 5}); 
 	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 2});
-
+	let touch = false;
 
 function init() {
 	if(portrait) { setCircleNumber()}
 	animateStars();
 	storeCount = localStorage.getItem('lastStoreCount');
 	storageLength = [localStorage.length - 1];
+	console.log(storageLength);
 	for (let i = 1; i < localStorage.length; i++) {
 		let v = localStorage.getItem(`storeNumber-${i}`)
 		storageValues.push(v);
 	}
 	document.addEventListener('contextmenu', e => e.preventDefault());
-	container.addEventListener('click', e => e.preventDefault());
-	touchPrevent.addEventListener('touchstart', e => e.preventDefault());
-	counters.forEach(counter => 
-		counter.addEventListener('touchstart', e => e.preventDefault()));
+	container.addEventListener('touchstart', e => e.preventDefault());
 } init();
 
 
@@ -254,6 +251,8 @@ btnDelete.addEventListener('click', () => {
 });
 
 btnDelete.addEventListener('touchstart', (e) => {
+	if(!touch) { e.stopPropagation()}
+		touch = true;
 	if(!deleteData && !deleteAllData) {
 		btnDelete.style.backgroundColor = '#333333';
 		btnDelete.style.color = '#f00';
@@ -268,8 +267,13 @@ btnDelete.addEventListener('touchstart', (e) => {
 	}
 });
 
+btnDelete.addEventListener('mousedown', () => {
+	touch = true;
+	setTimeout(() => { touch = false}, 500);
+});
+
 btnDelete.addEventListener('touchend', () => {
-	clearTimeout(tid_deleteAll);
+	touch = false; clearTimeout(tid_deleteAll);
 	if(!deleteAllData) {
 		btnDelete.style.backgroundColor = '';
 		btnDelete.style.color = '';
@@ -448,11 +452,11 @@ btnReset.addEventListener('click', () => {
 				counter.textContent = counter.dataset.num;
 			});
 			resetModifiedBtns();
-			iconUpload.style.color = '#00ff0099';
 			undoHowl.play();
 			btnManuals.forEach(btnManual => { btnManual.classList.remove('selected')});
 			if(activeCircles.length === 7) {
 				btnManuals.forEach(btnManual => { btnManual.classList.add('inactive')});
+				if(!uploaded) { iconUpload.style.color = '#00ff0099'}
 				disableManual = true;
 			} else { disableManual = false}
 			activeCircles.forEach(activeCircle => { activeCircle.classList.remove('selected')});
@@ -463,6 +467,18 @@ btnReset.addEventListener('click', () => {
 		}
 	}
 });
+
+	btnReset.addEventListener('touchstart', (e) => {
+		if(!touch) { e.stopPropagation()}
+		touch = true;
+	});
+	btnReset.addEventListener('mousedown', () => {
+		touch = true;
+		setTimeout(() => { touch = false}, 500);
+	});
+	btnReset.addEventListener('touchend', () => {
+		touch = false;
+	});
 
 //* btnQp -------------------------------------------------------------
 
@@ -491,6 +507,17 @@ btnQp.addEventListener('click', () => {
 	}
 });
 
+	btnQp.addEventListener('touchstart', (e) => {
+		if(!touch) { e.stopPropagation()}
+		touch = true;
+	});
+	btnQp.addEventListener('mousedown', () => {
+		touch = true;
+		setTimeout(() => { touch = false}, 500);
+	});
+	btnQp.addEventListener('touchend', () => {
+		touch = false;
+	});
 
 //* btnChange -------------------------------------------------------------
 
@@ -529,6 +556,19 @@ btnChange.addEventListener('click', () => {
 	}
 });
 
+	btnChange.addEventListener('touchstart', (e) => {
+		if(!touch) { e.stopPropagation()}
+		touch = true;
+	});
+
+	btnChange.addEventListener('mousedown', () => {
+		touch = true;
+		setTimeout(() => { touch = false}, 200);
+	});
+
+	btnChange.addEventListener('touchend', () => {
+		touch = false;
+	});
 
 //* btnSubmit -------------------------------------------------------------
 
@@ -582,6 +622,20 @@ btnSubmit.addEventListener('click', () => {
 		[submittable, selected, uploaded] = [false, false, false];
 	} //*** completed 7 number *** //
 });
+
+	btnSubmit.addEventListener('touchstart', (e) => {
+		if(!touch) { e.stopPropagation()}
+		touch = true;
+	});
+
+	btnSubmit.addEventListener('mousedown', () => {
+		touch = true;
+		setTimeout(() => { touch = false}, 500);
+	});
+
+	btnSubmit.addEventListener('touchend', () => {
+		touch = false;
+	});
 
 function abortDuplicateNumber(activeCircles) {
 	activeCircles.forEach(activeCircle => {
@@ -675,6 +729,17 @@ btnManuals.forEach((btnManual, index) => {
 			submittable = true; 
 		}
 	});
+	btnManual.addEventListener('touchstart', (e) => {
+		if(!touch) { e.stopPropagation()}
+		touch = true;
+	});
+	btnManual.addEventListener('mousedown', () => {
+		touch = true;
+		setTimeout(() => { touch = false}, 200);
+	});
+	btnManual.addEventListener('touchend', () => {
+		touch = false;
+	});
 });
 
 function animateStarsModified(index) {
@@ -727,7 +792,7 @@ function createWinningNumber() {
 		}
 		winningNumber.sort((a, b) => { return a - b }); 
 } createWinningNumber();
-// console.log('first', winningNumber); //* log
+console.log('first', winningNumber); //* log
 
 
 function assignWinningNumber(arg) {
