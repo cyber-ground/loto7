@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "Rodin-Pro";
-  src: local("Rodin Pro"), local("Rodin-Pro"), url("font/Rodin-Pro.ttf") format("truetype");
+  font-family: "FOT-Rodin-Pro-EB";
+  src: local("FOT-Rodin Pro EB"), local("FOT-Rodin-Pro-EB"), url("font/FOT-Rodin-Pro-EB.otf") format("opentype");
   font-display: swap;
 }
 @font-face {
@@ -31,6 +31,75 @@ body {
   background-image: url("img/aurora.jpg");
   background-position: center;
   background-size: cover;
+  font-family: serif;
+}
+
+.splash-screen {
+  font-family: "Alien-Encounters-Regular";
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.splash-screen.viewportLarge .title {
+  top: 12vh;
+}
+.splash-screen.landscape.viewportLarge .title {
+  top: 8vh;
+}
+.splash-screen.landscape.viewportLarge .image {
+  margin-top: 8vh;
+}
+.splash-screen.landscape .title {
+  top: 5vh;
+  background-color: rgba(0, 229, 255, 0.3);
+}
+.splash-screen.landscape .image {
+  margin-top: 5vh;
+}
+.splash-screen.landscape .btnEnter {
+  width: 35%;
+  background-color: rgba(0, 229, 255, 0.3);
+}
+.splash-screen h1.title, .splash-screen .btnEnter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.5647058824);
+  background-color: rgba(255, 255, 255, 0.2);
+  box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.1), inset -1px -1px 1px rgba(255, 255, 255, 0.05);
+  border-radius: 25px;
+}
+.splash-screen h1.title {
+  position: absolute;
+  top: 8vh;
+  height: 10px;
+  padding: 12px 10px 5px;
+  font-size: 2em;
+  transition: top 0.5s;
+}
+.splash-screen .image {
+  width: 80%;
+  height: 60%;
+  background-image: url("img/loto7.png");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.8;
+}
+.splash-screen .btnEnter {
+  position: relative;
+  width: 65%;
+  height: 20px;
+  padding: 22px 20px 10px;
+  font-size: 4em;
+  transition: scale 0.5s;
+}
+.splash-screen .btnEnter.active {
+  scale: 1.2;
 }
 
 .container {
@@ -40,6 +109,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
+  visibility: hidden;
   overflow: hidden;
 }
 .container .visual-container {
@@ -66,7 +136,7 @@ body {
 .container .visual-container .circle-container {
   width: 100%;
   margin: 0 auto;
-  font-family: "rodin-Pro";
+  font-family: "FOT-Rodin-Pro-EB";
   display: flex;
   justify-content: center;
 }
@@ -76,6 +146,7 @@ body {
 .container .visual-container .circle-container .circle {
   background-color: rgba(255, 255, 255, 0.1);
   box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.1), inset -1px -1px 1px rgba(255, 255, 255, 0.05);
+  padding-top: 3px;
 }
 .container .visual-container .circle-container .circle, .container .visual-container .circle-container .dummy {
   position: relative;
@@ -102,13 +173,17 @@ body {
   aspect-ratio: 1;
   border-radius: 50px;
   margin: initial;
+  padding-top: 5px;
 }
 .container .visual-container .circle-container .circle.activeCircle.landscape, .container .visual-container .circle-container .dummy.activeCircle.landscape {
   font-size: 34px;
 }
+.container .visual-container .circle-container .circle.activeCircle.landscape.adjusted, .container .visual-container .circle-container .dummy.activeCircle.landscape.adjusted {
+  padding-right: 3px;
+}
 .container .visual-container .circle-container .circle.activeCircle, .container .visual-container .circle-container .dummy.activeCircle {
   font-size: 24px;
-  color: #121212;
+  color: #212121;
   -webkit-text-stroke: 3px #fff;
   paint-order: stroke;
 }
@@ -123,7 +198,6 @@ body {
   height: 5vh;
   box-shadow: 0 0 0 0.8vw #0f0;
   border-radius: 3px;
-  margin-top: 3px;
 }
 .container .visual-container .circle-container .circle.activeCircle.largeViewport.selected::before, .container .visual-container .circle-container .dummy.activeCircle.largeViewport.selected::before {
   height: 6vh;
@@ -139,6 +213,7 @@ body {
   border-radius: 3px;
   width: 75px;
   aspect-ratio: 1;
+  margin-top: -2px;
 }
 .container .visual-container .circle-container .circle.ones, .container .visual-container .circle-container .dummy.ones {
   background-color: rgba(255, 111, 0, 0.6);
@@ -221,7 +296,7 @@ body {
   color: rgba(255, 255, 255, 0.7019607843);
 }
 .container .control-container .wpr .counter {
-  font-family: "Rodin-Pro";
+  font-family: "FOT-Rodin-Pro-EB";
   color: rgba(255, 255, 255, 0.8);
   box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.4), inset -1px -1px 1px rgba(255, 255, 255, 0.3);
 }
@@ -229,7 +304,6 @@ body {
   color: #fff;
   font-size: 30px;
   border: 6px solid #00ff00;
-  padding-bottom: 3px;
 }
 .container .control-container .wpr .counter.inactive {
   color: rgba(255, 255, 255, 0.2);

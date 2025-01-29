@@ -33,6 +33,9 @@ const btnUpload = controlContainer.querySelector('.btnUpload');
 const btnDownload = controlContainer.querySelector('.btnDownload');
 const iconUpload = btnUpload.querySelector('.iconUpload');
 const iconDownload = btnDownload.querySelector('.iconDownload');
+	const splashScreen = document.querySelector('.splash-screen');
+	const btnEnter = splashScreen.querySelector('.btnEnter');
+
 	let numbers, winningNumber;
 	let onesArr, tensArr, twentiesArr, thirtiesArr;
 	let currentStorageValue, deleteIndex, tid_btnDelete, tid_deleteAll;
@@ -42,6 +45,7 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	let [storeCount, storeIndex, slideIndex] = [0,0,0]; 
 	let [newNumbers, insertedNumbers, currentJackpotNumbers] = [[],[],[]];
 	let [lastSlideIndex, storageValues, storageLength] = [[],[],[]];
+	let touch = false;
 	
 	var insertHowl = new Howl({src: ['mp3/insert.mp3'], volume: 2}); 
 	var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 1}); 
@@ -55,22 +59,43 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	var deleteAllHowl = new Howl({src: ['mp3/deleteAll.mp3'], volume: 1}); 
 	var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 5}); 
 	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 2});
-	let touch = false;
+	var enterHowl = new Howl({src: ['mp3/enter.mp3'], volume: 0.2});
+	
+	function init() {
+		if(portrait) { setCircleNumber()}
+		animateStars();
+		storeCount = localStorage.getItem('lastStoreCount');
+		storageLength = [localStorage.length - 1];
+		console.log(storageLength);
+		for (let i = 1; i < localStorage.length; i++) {
+			let v = localStorage.getItem(`storeNumber-${i}`)
+			storageValues.push(v);
+		}
+		document.addEventListener('contextmenu', e => e.preventDefault());
+		splashScreen.addEventListener('touchstart', e => e.preventDefault());
+		container.addEventListener('touchstart', e => e.preventDefault());
+	} init();
 
-function init() {
-	if(portrait) { setCircleNumber()}
-	animateStars();
-	storeCount = localStorage.getItem('lastStoreCount');
-	storageLength = [localStorage.length - 1];
-	console.log(storageLength);
-	for (let i = 1; i < localStorage.length; i++) {
-		let v = localStorage.getItem(`storeNumber-${i}`)
-		storageValues.push(v);
+
+//* btnEnter ----------------------------------------------------
+
+btnEnter.addEventListener('touchstart', () => {
+	if(!touch) {
+		touch = true; enterHowl.play();
+		btnEnter.classList.add('active');
+		setTimeout(() => { btnEnter.classList.remove('active')}, 300);
+		setTimeout(() => {
+			splashScreen.style.visibility = 'hidden';
+			container.style.visibility = 'visible';
+			touch = false;
+		}, 1000);
 	}
-	document.addEventListener('contextmenu', e => e.preventDefault());
-	container.addEventListener('touchstart', e => e.preventDefault());
-} init();
+});
 
+btnEnter.addEventListener('click', () => {
+	splashScreen.remove();
+	container.style.visibility = 'visible';
+});
 
 //* btnUpload ----------------------------------------------------
 
@@ -319,7 +344,10 @@ function restoreData() { //* restore activeCircle selected
 	if(portrait) {
 		setCircleNumber();
 		assignWinningNumber(currentJackpotNumbers);
-	} else if(landscape) { insertJackpotNumbers(currentJackpotNumbers)}
+	} else if(landscape) { 
+		insertJackpotNumbers(currentJackpotNumbers); 
+		adjustActiveCircles();
+	}
 	const activeCircles = document.querySelectorAll('.activeCircle');
 	let idx = lastSlideIndex[0]; 
 	if(lastSlideIndex.length !== 0) { 
@@ -358,6 +386,7 @@ function restoreData() { //* restore activeCircle selected
 
 	function detectViewportSize() {
 		if(portrait) {
+			splashScreen.classList.remove('landscape');
 			jackpotCircles.forEach(circle => { circle.classList.remove('landscape')});
 			targets.forEach(target => { target.style.display = 'flex'});
 			jackpotWrapper.classList.remove('landscape'); 
@@ -366,6 +395,7 @@ function restoreData() { //* restore activeCircle selected
 			visualContainer.classList.remove('viewportSmall','viewportLarge','landscape');
 		} 
 		if(landscape) {
+			splashScreen.classList.add('landscape');
 			jackpotCircles.forEach(circle => { circle.classList.add('landscape')});
 			targets.forEach(target => { target.style.display = 'none'});
 			jackpotWrapper.classList.add('landscape'); 
@@ -373,8 +403,8 @@ function restoreData() { //* restore activeCircle selected
 			controlContainer.classList.remove('viewportLarge'); 
 			visualContainer.classList.remove('largeViewport','portrait');
 		} 
-		detectMenubarStatus_horizontal();
-		detectMenubarStatus_vertical();
+		detectMenubarStatus_landscape();
+		detectMenubarStatus_portrait();
 		activateStars();
 		if(!QP && !inserted && !submittable) { setIconDownloadColor()}
 	} detectViewportSize();
@@ -400,13 +430,15 @@ function deactivateStars() {
 	stars.forEach(star => { star.classList.remove('animate')});
 }
 
-	function detectMenubarStatus_horizontal() {
+	function detectMenubarStatus_landscape() {
 		if(landscape && innerHeight > 349) { 
+			splashScreen.classList.add('viewportLarge');
 			spacer.classList.remove('viewportSmall');
 			spacer.classList.add('viewportLarge');
 			visualContainer.classList.remove('viewportSmall','landscape');
 			visualContainer.classList.add('viewportLarge','landscape');
 		} else if(landscape && innerHeight < 349) {
+			splashScreen.classList.remove('viewportLarge');
 			spacer.classList.remove('viewportLarge');
 			spacer.classList.add('viewportSmall');
 			visualContainer.classList.remove('viewportLarge','landscape');
@@ -414,8 +446,9 @@ function deactivateStars() {
 		}	
 	}
 
-	function detectMenubarStatus_vertical() {
+	function detectMenubarStatus_portrait() {
 		if(portrait && innerHeight > 719) { //*large
+			splashScreen.classList.add('viewportLarge');
 			circleContainer.classList.add('viewportLarge');
 			controlContainer.classList.add('viewportLarge');
 			visualContainer.classList.add('largeViewport','portrait');
@@ -424,6 +457,7 @@ function deactivateStars() {
 				activeCircle.classList.add('largeViewport');
 			});
 		} else if(portrait && innerHeight < 720) { //*small //real610px
+			splashScreen.classList.remove('viewportLarge');
 			circleContainer.classList.remove('viewportLarge');
 			controlContainer.classList.remove('viewportLarge');
 			visualContainer.classList.remove('largeViewport','portrait');
@@ -474,7 +508,7 @@ btnReset.addEventListener('click', () => {
 	});
 	btnReset.addEventListener('mousedown', () => {
 		touch = true;
-		setTimeout(() => { touch = false}, 500);
+		setTimeout(() => { touch = false}, 200);
 	});
 	btnReset.addEventListener('touchend', () => {
 		touch = false;
@@ -485,7 +519,7 @@ btnReset.addEventListener('click', () => {
 btnQp.addEventListener('click', () => {
 	if(!QP && !inserted && !submittable) {
 		if(portrait) { assignWinningNumber(winningNumber)} 
-		else { insertJackpotNumbers(winningNumber)}
+		else { insertJackpotNumbers(winningNumber); adjustActiveCircles()}
 		deactivateStars(); 
 		insertHowl.play(); storeIndex = 0; //*
 		[QP, disableManual] = [true, true]; 
@@ -513,7 +547,7 @@ btnQp.addEventListener('click', () => {
 	});
 	btnQp.addEventListener('mousedown', () => {
 		touch = true;
-		setTimeout(() => { touch = false}, 500);
+		setTimeout(() => { touch = false}, 200);
 	});
 	btnQp.addEventListener('touchend', () => {
 		touch = false;
@@ -582,7 +616,7 @@ btnSubmit.addEventListener('click', () => {
 			insertHowl.play();
 			insertedNumbers.sort((a, b) => { return a - b});
 			if(portrait) { setCircleNumber(); assignWinningNumber(insertedNumbers)}
-			if(landscape) { insertJackpotNumbers(insertedNumbers)}
+			if(landscape) { insertJackpotNumbers(insertedNumbers); adjustActiveCircles()}
 			inserted = true;
 			resetModifiedBtns();
 			btnManuals.forEach(btnManual => { btnManual.classList.remove('selected')});
@@ -615,12 +649,16 @@ btnSubmit.addEventListener('click', () => {
 			resetCirclesNumber();
 			if(portrait) { setCircleNumber();
 				assignWinningNumber(newNumbers);
-			} else if(landscape) { insertJackpotNumbers(newNumbers)}
+			} else if(landscape) { 
+				insertJackpotNumbers(newNumbers); 
+				adjustActiveCircles();
+			}
 		}, 100);
 		disableManual = true; 
 		lastSlideIndex = []; slideIndex = 0;
 		[submittable, selected, uploaded] = [false, false, false];
 	} //*** completed 7 number *** //
+	
 });
 
 	btnSubmit.addEventListener('touchstart', (e) => {
@@ -630,7 +668,7 @@ btnSubmit.addEventListener('click', () => {
 
 	btnSubmit.addEventListener('mousedown', () => {
 		touch = true;
-		setTimeout(() => { touch = false}, 500);
+		setTimeout(() => { touch = false}, 200);
 	});
 
 	btnSubmit.addEventListener('touchend', () => {
@@ -845,12 +883,22 @@ function assignWinningNumber(arg) {
 		const circles = document.querySelectorAll('.circle');
 		circles.forEach(circle => {
 			circle.textContent = '';
-			circle.classList.remove('activeCircle', 'selected');
+			circle.classList.remove('activeCircle', 'selected', 'adjusted');
 			circle.classList.remove('ones','tens','twenties','thirties');
 		});
 	}
 
-
+	function adjustActiveCircles() {
+		const activeCircles = document.querySelectorAll('.activeCircle');
+		activeCircles.forEach(activeCircle => {
+			if(activeCircle.textContent === '10' 
+			|| activeCircle.textContent >= '12' 
+			&& activeCircle.textContent <= '19') {
+				activeCircle.classList.add('adjusted');
+			}
+		});
+	}
+	
 function assignCirclesColor() {
 	const circles = circleContainer.querySelectorAll('.circle');
 	circles.forEach(circle => {

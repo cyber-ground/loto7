@@ -2,9 +2,9 @@
 
 
 @font-face {
-  font-family: 'Rodin-Pro';
-  src: local('Rodin Pro'), local('Rodin-Pro'),
-  url('font/Rodin-Pro.ttf') format('truetype');
+  font-family: 'FOT-Rodin-Pro-EB';
+  src: local('FOT-Rodin Pro EB'), local('FOT-Rodin-Pro-EB'),
+  url('font/FOT-Rodin-Pro-EB.otf') format('opentype');
   font-display: swap;
 }
 @font-face {
@@ -43,6 +43,76 @@ body {
   background-image: url('img/aurora.jpg');
   background-position: center;
   background-size: cover;
+  font-family: serif;
+}
+
+.splash-screen {
+  font-family: 'Alien-Encounters-Regular';
+  position: absolute;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  &.viewportLarge .title {
+    top: 12vh; // portrait viewportLarge
+  }
+  &.landscape.viewportLarge .title {
+    top: 8vh;
+  }
+  &.landscape.viewportLarge .image {
+    margin-top: 8vh;
+  }
+  &.landscape .title {
+    top: 5vh; 
+    background-color: rgba(0, 229, 255, 0.3);
+  }
+  &.landscape .image {
+    margin-top: 5vh; 
+  }
+  &.landscape .btnEnter {
+    width: 35%; 
+    background-color: rgba(0, 229, 255, 0.3); 
+  }
+  h1.title, .btnEnter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff90;
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: inset 1px 1px 1px rgba(255,255,255,0.1), 
+    inset -1px -1px 1px rgba(255,255,255,0.05);
+    border-radius: 25px;
+  }
+  h1.title {
+    position: absolute;
+    top: 8vh; 
+    height: 10px;
+    padding: 12px 10px 5px;
+    font-size: 2em;
+    transition: top .5s;
+  }
+  .image {
+    width: 80%;
+    height: 60%;
+    background-image: url('img/loto7.png');
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: .8;
+  }
+  .btnEnter {
+    position: relative;
+    width: 65%; 
+    height: 20px;
+    padding: 22px 20px 10px;
+    font-size: 4em;
+    transition: scale .5s;
+    &.active {
+      scale: 1.2;
+    }
+  }
 }
 
 .container {
@@ -52,6 +122,7 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column; 
+  visibility: hidden; //*
   overflow: hidden; 
   .visual-container {
     width: 100%;
@@ -76,7 +147,7 @@ body {
     .circle-container {
       width: 100%;
       margin: 0 auto;
-      font-family: 'rodin-Pro';
+      font-family: 'FOT-Rodin-Pro-EB';
       display: flex;
       justify-content: center;
       &.viewportLarge .circle,
@@ -87,6 +158,7 @@ body {
         background-color: rgba(255,255,255,0.1);
         box-shadow: inset 1px 1px 1px rgba(255,255,255,0.1), 
         inset -1px -1px 1px rgba(255,255,255,0.05);
+        padding-top: 3px; //*>
       }
       .circle, .dummy {
         position: relative;
@@ -99,7 +171,7 @@ body {
         align-items: center;
         font-size: 1em; 
         color: #ffffffcc;
-        padding-bottom: 3px;
+        padding-bottom: 3px; 
         z-index: 1;
         margin: 3px;
         &.landscape {
@@ -112,13 +184,17 @@ body {
           aspect-ratio: 1;
           border-radius: 50px;
           margin: initial;
+          padding-top: 5px; //*>
         }
         &.activeCircle.landscape {
           font-size: 34px; 
         }
+        &.activeCircle.landscape.adjusted {
+          padding-right: 3px;
+        }
         &.activeCircle {
           font-size: 24px; 
-          color: #121212;
+          color: #212121;
           -webkit-text-stroke: 3px #fff;
           paint-order: stroke;
         }
@@ -133,7 +209,6 @@ body {
           height: 5vh;
           box-shadow: 0 0 0 .8vw #0f0; 
           border-radius: 3px;
-          margin-top: 3px;
         }
         &.activeCircle.largeViewport.selected::before {
           height: 6vh;
@@ -149,6 +224,7 @@ body {
           border-radius: 3px;
           width: 75px;
           aspect-ratio: 1;
+          margin-top: -2px;
         }
         &.ones {
           background-color: #FF6F0099;
@@ -253,7 +329,7 @@ body {
         }
       }
       .counter {
-        font-family: 'Rodin-Pro';
+        font-family: 'FOT-Rodin-Pro-EB';
         color: #ffffffcc;
         box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 
         inset -1px -1px 1px rgba(255,255,255,0.3);
@@ -261,7 +337,6 @@ body {
           color: #fff;
           font-size: 30px;
           border: 6px solid #00ff00;
-          padding-bottom: 3px;
         }
         &.inactive {
           color: #ffffff33;
