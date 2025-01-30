@@ -41,12 +41,11 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	let currentStorageValue, deleteIndex, tid_btnDelete, tid_deleteAll;
 	let [QP, inserted, disableManual, submittable] = [false, false, false, false];
 	let [reset, selected, uploaded, download] = [false, false, false, false];
-	let [deleteData, deleteAllData] = [false, false];
+	let [deleteData, deleteAllData, touch] = [false, false, false];
 	let [storeCount, storeIndex, slideIndex] = [0,0,0]; 
 	let [newNumbers, insertedNumbers, currentJackpotNumbers] = [[],[],[]];
 	let [lastSlideIndex, storageValues, storageLength] = [[],[],[]];
-	let touch = false;
-	
+
 	var insertHowl = new Howl({src: ['mp3/insert.mp3'], volume: 2}); 
 	var swapHowl = new Howl({src: ['mp3/swap.mp3'], volume: 1}); 
 	var resetHowl = new Howl({src: ['mp3/reset.mp3'], volume: 3}); 
