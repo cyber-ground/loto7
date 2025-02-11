@@ -317,6 +317,7 @@ window.addEventListener('resize', () => {
 	portrait = window.matchMedia('(orientation: portrait)').matches;
 	landscape = window.matchMedia('(orientation: landscape)').matches;
 	currentJackpotNumbers = [];
+	// temp(); //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	saveData();
 	detectViewportSize();
 	restoreData();
@@ -382,6 +383,26 @@ function restoreData() { //* restore activeCircle selected
 		setIconDownloadColor();
 	}
 
+	//^ --------------------------------------------------------------------
+
+	// let ogPortHeight = undefined;
+	// let ogLandHeight = undefined;
+	// function temp() {
+	// 	const title = document.querySelector('.title');
+	// 	if(innerWidth < innerHeight) {
+	// 		ogPortHeight = outerHeight - (outerHeight - innerHeight);
+	// 		btnEnter.textContent = ogPortHeight;
+	// 	}
+	// 	if(innerWidth > innerHeight) {
+	// 		ogLandHeight = outerHeight - (outerHeight - innerHeight);
+	// 		btnEnter.textContent = ogLandHeight;
+	// 	} 
+	// 	if(ogPortHeight === undefined) { title.textContent = 'undePort';}
+	// 	if(ogLandHeight === undefined) { title.textContent = 'undeLand';}
+	// }
+	// 	temp();
+
+	//^ --------------------------------------------------------------------
 
 	function detectViewportSize() {
 		if(portrait) {
@@ -429,14 +450,14 @@ function deactivateStars() {
 	stars.forEach(star => { star.classList.remove('animate')});
 }
 
-	function detectMenubarStatus_landscape() {
-		if(landscape && innerHeight > 349) { 
+	function detectMenubarStatus_landscape() { //^ ogLandHeight
+		if(landscape && innerHeight > 349) {  //* innerHeight > 349
 			splashScreen.classList.add('viewportLarge');
 			spacer.classList.remove('viewportSmall');
 			spacer.classList.add('viewportLarge');
 			visualContainer.classList.remove('viewportSmall','landscape');
 			visualContainer.classList.add('viewportLarge','landscape');
-		} else if(landscape && innerHeight < 349) {
+		} else if(landscape && innerHeight < 349 ) { //* innerHeight < 349
 			splashScreen.classList.remove('viewportLarge');
 			spacer.classList.remove('viewportLarge');
 			spacer.classList.add('viewportSmall');
@@ -445,8 +466,9 @@ function deactivateStars() {
 		}	
 	}
 
-	function detectMenubarStatus_portrait() {
-		if(portrait && innerHeight > 719) { //*large
+
+	function detectMenubarStatus_portrait() { //^ogPortHeight
+		if(portrait && innerHeight > 719) { //* innerHeight > 719
 			splashScreen.classList.add('viewportLarge');
 			circleContainer.classList.add('viewportLarge');
 			controlContainer.classList.add('viewportLarge');
@@ -455,7 +477,7 @@ function deactivateStars() {
 			activeCircles.forEach(activeCircle => {
 				activeCircle.classList.add('largeViewport');
 			});
-		} else if(portrait && innerHeight < 720) { //*small //real610px
+		} else if(portrait && innerHeight < 720) { //* innerHeight < 720
 			splashScreen.classList.remove('viewportLarge');
 			circleContainer.classList.remove('viewportLarge');
 			controlContainer.classList.remove('viewportLarge');
@@ -501,17 +523,13 @@ btnReset.addEventListener('click', () => {
 	}
 });
 
-	btnReset.addEventListener('touchstart', (e) => {
-		if(!touch) { e.stopPropagation()}
-		touch = true;
-	});
-	btnReset.addEventListener('mousedown', () => {
-		touch = true;
-		setTimeout(() => { touch = false}, 200);
-	});
-	btnReset.addEventListener('touchend', () => {
-		touch = false;
-	});
+btnReset.addEventListener('touchstart', (e) => {
+	if(!touch) { touch = true; e.stopPropagation()}
+});
+
+btnReset.addEventListener('touchend', () => {
+	setTimeout(() => { touch = false}, 200);
+});
 
 //* btnQp -------------------------------------------------------------
 
@@ -540,17 +558,13 @@ btnQp.addEventListener('click', () => {
 	}
 });
 
-	btnQp.addEventListener('touchstart', (e) => {
-		if(!touch) { e.stopPropagation()}
-		touch = true;
-	});
-	btnQp.addEventListener('mousedown', () => {
-		touch = true;
-		setTimeout(() => { touch = false}, 200);
-	});
-	btnQp.addEventListener('touchend', () => {
-		touch = false;
-	});
+btnQp.addEventListener('touchstart', (e) => {
+	if(!touch) { touch = true; e.stopPropagation()}
+});
+
+btnQp.addEventListener('touchend', () => {
+	setTimeout(() => { touch = false}, 200);
+});
 
 //* btnChange -------------------------------------------------------------
 
@@ -589,19 +603,13 @@ btnChange.addEventListener('click', () => {
 	}
 });
 
-	btnChange.addEventListener('touchstart', (e) => {
-		if(!touch) { e.stopPropagation()}
-		touch = true;
-	});
+btnChange.addEventListener('touchstart', (e) => {
+	if(!touch) { touch = true; e.stopPropagation()}
+});
 
-	btnChange.addEventListener('mousedown', () => {
-		touch = true;
-		setTimeout(() => { touch = false}, 200);
-	});
-
-	btnChange.addEventListener('touchend', () => {
-		touch = false;
-	});
+btnChange.addEventListener('touchend', () => {
+	touch = false;
+});
 
 //* btnSubmit -------------------------------------------------------------
 
@@ -661,17 +669,11 @@ btnSubmit.addEventListener('click', () => {
 });
 
 	btnSubmit.addEventListener('touchstart', (e) => {
-		if(!touch) { e.stopPropagation()}
-		touch = true;
-	});
-
-	btnSubmit.addEventListener('mousedown', () => {
-		touch = true;
-		setTimeout(() => { touch = false}, 200);
+		if(!touch) { touch = true; e.stopPropagation()}
 	});
 
 	btnSubmit.addEventListener('touchend', () => {
-		touch = false;
+		setTimeout(() => { touch = false}, 200);
 	});
 
 function abortDuplicateNumber(activeCircles) {
@@ -767,12 +769,7 @@ btnManuals.forEach((btnManual, index) => {
 		}
 	});
 	btnManual.addEventListener('touchstart', (e) => {
-		if(!touch) { e.stopPropagation()}
-		touch = true;
-	});
-	btnManual.addEventListener('mousedown', () => {
-		touch = true;
-		setTimeout(() => { touch = false}, 200);
+		if(!touch) { touch = true; e.stopPropagation();}
 	});
 	btnManual.addEventListener('touchend', () => {
 		touch = false;
@@ -948,9 +945,18 @@ function assignCirclesColor() {
 
 // -------------------------------------------------------------------------------
 
+// btnChange.addEventListener('touchstart', (e) => {
+// 	if(!touch) { touch = true; e.stopPropagation()}
+// });
 
+// btnChange.addEventListener('mousedown', (e) => {
+// 	setTimeout(() => {btnChange.style.pointerEvents = 'none'}, 0);
+// 	setTimeout(() => {btnChange.style.pointerEvents = 'all'}, 100);
+// });
 
-
+// btnChange.addEventListener('touchend', () => {
+// 	setTimeout(() => { touch = false; }, 80);
+// });
 
 
 
