@@ -75,6 +75,19 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 		container.addEventListener('touchstart', e => e.preventDefault());
 	} init();
 
+	let [total, currentDebt, bestScore] = [null,null,null];
+	function localStorageGetItem() {
+		if(localStorage.hasOwnProperty('total')) {
+			total = localStorage.getItem('total');
+		}
+		if(localStorage.hasOwnProperty('currentDebt')) {
+			currentDebt = localStorage.getItem('currentDebt');
+		}
+		if(localStorage.hasOwnProperty('bestScore')) {
+			bestScore = localStorage.getItem('bestScore');
+		}
+	
+	} localStorageGetItem();
 
 //* btnEnter ----------------------------------------------------
 
@@ -249,7 +262,6 @@ btnDownload.addEventListener('touchend', () => {
 	btnDownload.classList.remove('active');
 });
 
-
 //* btnDelete ----------------------------------------------------
 
 btnDelete.addEventListener('click', () => {
@@ -268,6 +280,10 @@ btnDelete.addEventListener('click', () => {
 		localStorage.clear();
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
+
+		if(total !== null) { localStorage.setItem('total', total)}
+		if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
+		if(bestScore !== null) {localStorage.setItem('bestScore', bestScore)}
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
