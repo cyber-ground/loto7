@@ -63,11 +63,11 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	function init() {
 		if(portrait) { setCircleNumber()}
 		animateStars();
-		storeCount = localStorage.getItem('lastStoreCount');
-		storageLength = [localStorage.length - 1];
+		storeCount = sessionStorage.getItem('lastStoreCount');
+		storageLength = [sessionStorage.length - 1];
 		console.log(storageLength);
-		for (let i = 1; i < localStorage.length; i++) {
-			let v = localStorage.getItem(`storeNumber-${i}`)
+		for (let i = 1; i < sessionStorage.length; i++) {
+			let v = sessionStorage.getItem(`storeNumber-${i}`)
 			storageValues.push(v);
 		}
 		document.addEventListener('contextmenu', e => e.preventDefault());
@@ -107,8 +107,8 @@ btnUpload.addEventListener('touchstart', (e) => {
 		saveData();
 		flashActiveCircles();
 		storeCount++;
-		localStorage.setItem('lastStoreCount', storeCount);
-		localStorage.setItem(`storeNumber-${storeCount}`, currentJackpotNumbers);
+		sessionStorage.setItem('lastStoreCount', storeCount);
+		sessionStorage.setItem(`storeNumber-${storeCount}`, currentJackpotNumbers);
 		storageValues.push(currentJackpotNumbers);
 		storageLength.push(storeCount);
 		uploaded = true;
@@ -172,8 +172,8 @@ function flashActiveCircles() {
 //* btnDownload ----------------------------------------------------
 
 btnDownload.addEventListener('touchstart', () => {
-	if(!localStorage.hasOwnProperty('lastStoreCount')) return;
-	if(localStorage.getItem('lastStoreCount') === '0') return;
+	if(!sessionStorage.hasOwnProperty('lastStoreCount')) return;
+	if(sessionStorage.getItem('lastStoreCount') === '0') return;
 	if(btnSubmit.classList.contains('activate')) return; 
 	if(download && storageLength[0] === 1) return; 
 	if(!QP && !inserted || download) { 
@@ -184,12 +184,12 @@ btnDownload.addEventListener('touchstart', () => {
 		if(!btnDelete.classList.contains('active')) {
 			swapIconUpload('fa-cloud-arrow-up','fa-xmark','#ff000099');
 		}
-		if(storeIndex === localStorage.length - 1) {storeIndex = 0}
+		if(storeIndex === sessionStorage.length - 1) {storeIndex = 0}
 		storeIndex++;
-		const storeNumber = localStorage.getItem(`storeNumber-${storeIndex}`).split(',');
+		const storeNumber = sessionStorage.getItem(`storeNumber-${storeIndex}`).split(',');
 		deleteIndex.push(storeIndex);
 		storeNumber.map(num => { currentStorageValue.push(num)});
-		restoreLocalStorageData();
+		restoreSessionStorageData();
 		[QP, download] = [true, true];
 		btnQp.classList.add('inactivate');
 		btnReset.classList.add('activate');
@@ -205,25 +205,25 @@ function swapIconUpload(classNameRemove, classNameAdd, color) {
 }
 
 function deleteStoreData() {
-	localStorage.removeItem(`storeNumber-${deleteIndex[0]}`);
+	sessionStorage.removeItem(`storeNumber-${deleteIndex[0]}`);
 	storageValues.splice((deleteIndex[0] - 1), 1);
 	let storeNumber;
 	setTimeout(() => {
-		localStorage.clear();
+		sessionStorage.clear();
 		storeCount = storeCount-1;
-		localStorage.setItem('lastStoreCount', storeCount);
+		sessionStorage.setItem('lastStoreCount', storeCount);
 		for (let i = 0; i < storageValues.length; i++) {
-			localStorage.setItem(`storeNumber-${[i+1]}`, storageValues[i])}
+			sessionStorage.setItem(`storeNumber-${[i+1]}`, storageValues[i])}
 		setTimeout(() => {
-			if(localStorage.getItem('lastStoreCount') === '0') {
+			if(sessionStorage.getItem('lastStoreCount') === '0') {
 				storageLength = [storeCount]; resetAll(); activateStars(); return}
 			if(deleteIndex[0] === storageLength[0]) {
-				storeNumber = localStorage.getItem(`storeNumber-1`).split(',');
+				storeNumber = sessionStorage.getItem(`storeNumber-1`).split(',');
 				storeIndex = 1; deleteIndex = [storeIndex]; 
-			} else { storeNumber = localStorage.getItem(`storeNumber-${storeIndex}`).split(',')}
+			} else { storeNumber = sessionStorage.getItem(`storeNumber-${storeIndex}`).split(',')}
 			currentStorageValue = [];
 			storeNumber.map(num => { currentStorageValue.push(num)});
-			restoreLocalStorageData();
+			restoreSessionStorageData();
 			storageLength = [storeCount];
 			if(storageLength[0] === 1) { iconDownload.style.color = ''}
 			downloadHowl.play();
@@ -232,7 +232,7 @@ function deleteStoreData() {
 	}, 300); //* bc500
 }
 
-function restoreLocalStorageData() { 
+function restoreSessionStorageData() { 
 	resetCirclesNumber();
 	if(portrait) {
 		setCircleNumber();
@@ -265,9 +265,9 @@ btnDelete.addEventListener('click', () => {
 	}
 	if(deleteAllData) {
 		deleteAllHowl.play();
-		localStorage.clear();
+		sessionStorage.clear();
 		storeCount = 0;
-		localStorage.setItem('lastStoreCount', storeCount);
+		sessionStorage.setItem('lastStoreCount', storeCount);
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
@@ -933,7 +933,7 @@ function assignCirclesColor() {
 //* ---------------------------------------
 // -------------------------------------------------------------------------------
 		// let storageKeys = [];
-		// Object.keys(localStorage).forEach(key => { 
+		// Object.keys(sessionStorage).forEach(key => { 
 		// 	if(key.includes('chose keyName')) {
 		// 		if(!storageKeys.includes(key)) {
 		// 			storageKeys.push(key);
