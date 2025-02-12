@@ -59,12 +59,11 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	var undoHowl = new Howl({src: ['mp3/undo.mp3'], volume: 5}); 
 	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 2});
 	var enterHowl = new Howl({src: ['mp3/enter.mp3'], volume: 0.2});
-	
+
 	let count = 0;
 	if(localStorage.hasOwnProperty('total')) { count++}
 	if(localStorage.hasOwnProperty('currentDebt')) { count++}
 	if(localStorage.hasOwnProperty('bestScore')) { count++}
-	// if(localStorage.hasOwnProperty('lastStoreCount')) { count++}
 
 	let [total, currentDebt, bestScore] = [null, null, null];
 	if(localStorage.hasOwnProperty('total')) { total = localStorage.getItem('total')}
@@ -221,7 +220,9 @@ function deleteStoreData() {
 	let storeNumber;
 	setTimeout(() => {
 		localStorage.clear();
-		setData(); /////////////////////////////////////////////////////////////////////////////
+		if(total !== null) { localStorage.setItem('total', total)}
+		if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
+		if(bestScore !== null) { localStorage.setItem('bestScore', bestScore)}
 		storeCount = storeCount-1;
 		localStorage.setItem('lastStoreCount', storeCount);
 		for (let i = 0; i < storageValues.length; i++) {
@@ -280,18 +281,16 @@ btnDelete.addEventListener('click', () => {
 		localStorage.clear();
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
-		setData(); /////////////////////////////////////////////////////////////////////////////
+		
+		if(total !== null) { localStorage.setItem('total', total)}
+		if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
+		if(bestScore !== null) { localStorage.setItem('bestScore', bestScore)}
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
 	}
 });
 
-function setData() {
-	if(localStorage.hasOwnProperty('total')) { localStorage.setItem('total', total)}
-	if(localStorage.hasOwnProperty('currentDebt')) { localStorage.setItem('currentDebt', currentDebt)}
-	if(localStorage.hasOwnProperty('bestScore')) { localStorage.setItem('bestScore', bestScore)}
-}
 btnDelete.addEventListener('touchstart', (e) => {
 	if(!touch) { e.stopPropagation()}
 		touch = true;
