@@ -60,23 +60,18 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 2});
 	var enterHowl = new Howl({src: ['mp3/enter.mp3'], volume: 0.2});
 
-	let count = 0;
-	if(localStorage.hasOwnProperty('total')) { count++}
-	if(localStorage.hasOwnProperty('currentDebt')) { count++}
-	if(localStorage.hasOwnProperty('bestScore')) { count++}
-
+	let subtract = 0;
 	let [total, currentDebt, bestScore] = [null, null, null];
-	if(localStorage.hasOwnProperty('total')) { total = localStorage.getItem('total')}
-	if(localStorage.hasOwnProperty('currentDebt')) { currentDebt = localStorage.getItem('currentDebt')}
-	if(localStorage.hasOwnProperty('bestScore')) { bestScore = localStorage.getItem('bestScore')}
 
 	function init() {
 		if(portrait) { setCircleNumber()}
 		animateStars();
+		detectSubtractCount();
+		getAppData();
 		storeCount = localStorage.getItem('lastStoreCount');
-		storageLength = [localStorage.length - count -1];
+		storageLength = [localStorage.length - subtract -1];
 		console.log(storageLength);
-		for (let i = 1; i < localStorage.length - count; i++) {
+		for (let i = 1; i < localStorage.length - subtract; i++) {
 			let v = localStorage.getItem(`storeNumber-${i}`)
 			storageValues.push(v);
 		}
@@ -85,7 +80,17 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 		container.addEventListener('touchstart', e => e.preventDefault());
 	} init();
 
+function detectSubtractCount() {
+	if(localStorage.hasOwnProperty('total')) { subtract++}
+	if(localStorage.hasOwnProperty('currentDebt')) { subtract++}
+	if(localStorage.hasOwnProperty('bestScore')) { subtract++}
+}
 
+function getAppData() {
+	if(localStorage.hasOwnProperty('total')) { total = localStorage.getItem('total')}
+	if(localStorage.hasOwnProperty('currentDebt')) { currentDebt = localStorage.getItem('currentDebt')}
+	if(localStorage.hasOwnProperty('bestScore')) { bestScore = localStorage.getItem('bestScore')}
+}
 
 //* btnEnter ----------------------------------------------------
 
@@ -194,7 +199,7 @@ btnDownload.addEventListener('touchstart', () => {
 		if(!btnDelete.classList.contains('active')) {
 			swapIconUpload('fa-cloud-arrow-up','fa-xmark','#ff000099');
 		}
-		if(storeIndex === localStorage.length - count - 1) {storeIndex = 0}
+		if(storeIndex === localStorage.length - subtract - 1) {storeIndex = 0}
 		storeIndex++;
 		const storeNumber = localStorage.getItem(`storeNumber-${storeIndex}`).split(',');
 		deleteIndex.push(storeIndex);
