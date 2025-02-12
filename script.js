@@ -221,6 +221,9 @@ function deleteStoreData() {
 	let storeNumber;
 	setTimeout(() => {
 		localStorage.clear();
+		if(total !== 'null') { localStorage.setItem('total', total)}
+		if(currentDebt !== 'null') { localStorage.setItem('currentDebt', currentDebt)}
+		if(bestScore !== 'null') { localStorage.setItem('bestScore', bestScore)}
 		storeCount = storeCount-1;
 		localStorage.setItem('lastStoreCount', storeCount);
 		for (let i = 0; i < storageValues.length; i++) {
@@ -280,9 +283,9 @@ btnDelete.addEventListener('click', () => {
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
 		
-		localStorage.setItem('total', total);
-		localStorage.setItem('currentDebt', currentDebt);
-		localStorage.setItem('bestScore', bestScore);
+		if(total !== 'null') { localStorage.setItem('total', total)}
+		if(currentDebt !== 'null') { localStorage.setItem('currentDebt', currentDebt)}
+		if(bestScore !== 'null') { localStorage.setItem('bestScore', bestScore)}
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
