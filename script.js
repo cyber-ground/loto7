@@ -221,9 +221,7 @@ function deleteStoreData() {
 	let storeNumber;
 	setTimeout(() => {
 		localStorage.clear();
-		if(total !== 'null') { localStorage.setItem('total', total)}
-		if(currentDebt !== 'null') { localStorage.setItem('currentDebt', currentDebt)}
-		if(bestScore !== 'null') { localStorage.setItem('bestScore', bestScore)}
+		setData(); /////////////////////////////////////////////////////////////////////////////
 		storeCount = storeCount-1;
 		localStorage.setItem('lastStoreCount', storeCount);
 		for (let i = 0; i < storageValues.length; i++) {
@@ -282,16 +280,18 @@ btnDelete.addEventListener('click', () => {
 		localStorage.clear();
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
-		
-		if(total !== 'null') { localStorage.setItem('total', total)}
-		if(currentDebt !== 'null') { localStorage.setItem('currentDebt', currentDebt)}
-		if(bestScore !== 'null') { localStorage.setItem('bestScore', bestScore)}
+		setData(); /////////////////////////////////////////////////////////////////////////////
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
 	}
 });
 
+function setData() {
+	if(localStorage.hasOwnProperty('total')) { localStorage.setItem('total', total)}
+	if(localStorage.hasOwnProperty('currentDebt')) { localStorage.setItem('currentDebt', currentDebt)}
+	if(localStorage.hasOwnProperty('bestScore')) { localStorage.setItem('bestScore', bestScore)}
+}
 btnDelete.addEventListener('touchstart', (e) => {
 	if(!touch) { e.stopPropagation()}
 		touch = true;
