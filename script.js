@@ -220,9 +220,8 @@ function deleteStoreData() {
 	let storeNumber;
 	setTimeout(() => {
 		localStorage.clear();
-		if(total !== null) { localStorage.setItem('total', total)}
-		if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
-		if(bestScore !== null) { localStorage.setItem('bestScore', bestScore)}
+		
+		setAppData()
 		storeCount = storeCount-1;
 		localStorage.setItem('lastStoreCount', storeCount);
 		for (let i = 0; i < storageValues.length; i++) {
@@ -282,9 +281,7 @@ btnDelete.addEventListener('click', () => {
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
 		
-		if(total !== null) { localStorage.setItem('total', total)}
-		if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
-		if(bestScore !== null) { localStorage.setItem('bestScore', bestScore)}
+		setAppData();
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
@@ -327,6 +324,11 @@ function setIconDownloadColor() {
 	storageLength[0] > 0 ? '#00ff0099' : '';
 }
 
+function setAppData() {
+	if(total !== null) { localStorage.setItem('total', total)}
+	if(currentDebt !== null) { localStorage.setItem('currentDebt', currentDebt)}
+	if(bestScore !== null) { localStorage.setItem('bestScore', bestScore)}
+}
 
 //* resize event ----------------------------------------------------
 
