@@ -60,13 +60,24 @@ const iconDownload = btnDownload.querySelector('.iconDownload');
 	var faultHowl = new Howl({src: ['mp3/fault.mp3'], volume: 2});
 	var enterHowl = new Howl({src: ['mp3/enter.mp3'], volume: 0.2});
 	
+	let count = 0;
+	if(localStorage.hasOwnProperty('total')) { count++}
+	if(localStorage.hasOwnProperty('currentDebt')) { count++}
+	if(localStorage.hasOwnProperty('bestScore')) { count++}
+	// if(localStorage.hasOwnProperty('lastStoreCount')) { count++}
+
+	let [total, currentDebt, bestScore] = [null, null, null];
+	if(localStorage.hasOwnProperty('total')) { total = localStorage.getItem('total')}
+	if(localStorage.hasOwnProperty('currentDebt')) { currentDebt = localStorage.getItem('currentDebt')}
+	if(localStorage.hasOwnProperty('bestScore')) { bestScore = localStorage.getItem('bestScore')}
+
 	function init() {
 		if(portrait) { setCircleNumber()}
 		animateStars();
 		storeCount = localStorage.getItem('lastStoreCount');
-		storageLength = [localStorage.length - 1];
+		storageLength = [localStorage.length - count -1];
 		console.log(storageLength);
-		for (let i = 1; i < localStorage.length; i++) {
+		for (let i = 1; i < localStorage.length - count; i++) {
 			let v = localStorage.getItem(`storeNumber-${i}`)
 			storageValues.push(v);
 		}
@@ -184,7 +195,7 @@ btnDownload.addEventListener('touchstart', () => {
 		if(!btnDelete.classList.contains('active')) {
 			swapIconUpload('fa-cloud-arrow-up','fa-xmark','#ff000099');
 		}
-		if(storeIndex === localStorage.length - 1) {storeIndex = 0}
+		if(storeIndex === localStorage.length - count - 1) {storeIndex = 0}
 		storeIndex++;
 		const storeNumber = localStorage.getItem(`storeNumber-${storeIndex}`).split(',');
 		deleteIndex.push(storeIndex);
@@ -268,6 +279,10 @@ btnDelete.addEventListener('click', () => {
 		localStorage.clear();
 		storeCount = 0;
 		localStorage.setItem('lastStoreCount', storeCount);
+		
+		localStorage.setItem('total', total);
+		localStorage.setItem('currentDebt', currentDebt);
+		localStorage.setItem('bestScore', bestScore);
 		[storageLength, storageValues] = [[],[]];
 		resetAll();
 		animateStars();
